@@ -3,11 +3,11 @@ import React,{useState} from 'react'
 
 
 const footer = ({ contact_ref ,base_url}) => {
-    //sending the data to backend
     const [formData, setForm] = useState({
         email: "",
         message: ""
     })
+    //sending the data to backend
     const handleEmailChange=(e)=>{
         setForm({ ...formData, [e.target.name]: e.target.value });
     }
@@ -30,7 +30,7 @@ const footer = ({ contact_ref ,base_url}) => {
             }
 
             const data = await res.json();
-            alert(data.message || "Game uploaded successfully!");
+            alert("Message Sent Successfully");
             console.log("Server response:", data);
 
         } catch (err) {
