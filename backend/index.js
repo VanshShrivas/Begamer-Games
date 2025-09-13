@@ -6,6 +6,7 @@ import multer from "multer";
 import dotenv from "dotenv";
 import { v2 as cloudinary } from "cloudinary";
 import Game from "./models/gameModel.js";
+import sendMail from "./helpers/mailer.js"
 
 dotenv.config();
 
@@ -138,6 +139,19 @@ app.post(
     }
 );
 
+
+app.post("/mail",(req,res)=>{
+    console.log(req.body);
+    try{
+    const {email,message}=req.body;
+    const info = sendMail(email,message);
+    console.log("done");
+    res.status(200).json({message:"Message Sent."});
+    }catch(err){
+        console.log("failed");
+        res.status(500).json({ message: "Failed to send message", error: err.message });
+    }
+})
 
 app.delete("/delete",(req,res)=>{
     console.log(req.body);
