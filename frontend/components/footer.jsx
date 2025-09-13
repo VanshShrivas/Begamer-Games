@@ -16,6 +16,7 @@ const footer = ({ contact_ref ,base_url}) => {
         setForm({ ...formData, [e.target.name]: e.target.value });
     }
     const handleSend = async (e) => {
+        e.preventDefault();
         if(formData.email && formData.message&&emailref.current.checkValidity()){
         try {
             const res = await fetch(`${base_url}/mail`, {
