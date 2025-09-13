@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useRef} from 'react'
 
 
 
@@ -7,6 +7,7 @@ const footer = ({ contact_ref ,base_url}) => {
         email: "",
         message: ""
     })
+    const emailref=useRef(null);
     //sending the data to backend
     const handleEmailChange=(e)=>{
         setForm({ ...formData, [e.target.name]: e.target.value });
@@ -15,6 +16,7 @@ const footer = ({ contact_ref ,base_url}) => {
         setForm({ ...formData, [e.target.name]: e.target.value });
     }
     const handleSend = async (e) => {
+        if(formData.email && formData.message&&emailref.current.checkValidity()){
         try {
             const res = await fetch(`${base_url}/mail`, {
                 method: "POST",
@@ -35,6 +37,11 @@ const footer = ({ contact_ref ,base_url}) => {
 
         } catch (err) {
             console.error("❌ Error:", err.message);
+        }}
+        else{
+            if(!emailref.current.checkValidity()) {alert("Email Not Valid");}
+            else alert("One or More fields Empty!!")
+
         }
     }
 
@@ -56,6 +63,7 @@ const footer = ({ contact_ref ,base_url}) => {
                                 {/* Email Input */}
                                 <input
                                     onChange={handleEmailChange}
+                                    ref={emailref}
                                     type="email"
                                     name="email"
                                     value={formData.email}
